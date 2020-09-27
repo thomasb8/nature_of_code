@@ -1,7 +1,7 @@
 int cols, rows;
 int scl = 20;
-int w = 12000;
-int h = 9000;
+int w = 2000;
+int h = 1500;
 
 float[][] terrain;
 
@@ -10,19 +10,22 @@ void setup() {
     cols = w / scl;
     rows = h / scl;
     terrain = new float[cols][rows];
-    float xoff = 0;
-    for (int y = 0; y < rows; y++) {
-        float yoff = 0;
-        for (int x = 0; x < cols; x++) {
-            terrain[x][y] = map(noise(xoff, yoff), 0, 1, -200, 200);
-            yoff += 0.05;
-        }
-        xoff += 0.05;
-    }
 }
 
+float flyOffset = 0;
 
 void draw() {
+    flyOffset -= 0.02;
+    float yoff = flyOffset;
+    for (int y = 0; y < rows; y++) {
+        float xoff = 0;
+        for (int x = 0; x < cols; x++) {
+            terrain[x][y] = map(noise(xoff, yoff), 0, 1, -100, 100);
+            xoff += 0.1;
+        }
+        yoff += 0.1;
+    }
+
     background(255);
     stroke(0);
     fill(120, 120, 120);
